@@ -3,19 +3,30 @@ package com.mohitkanwar.ai.maze.mazereader;
 import com.mohitkanwar.ai.maze.models.*;
 
 public class MazeReader {
-    public MazeMeta getMaze1() {
+    char[][] maze1 = {
+            {'#', '#', ' ', ' ', ' ', ' ', 'B'},
+            {'#', '#', ' ', '#', '#', '#', '#'},
+            {'#', '#', ' ', '#', '#', '#', '#'},
+            {'#', '#', ' ', '#', '#', '#', '#'},
+            {'#', '#', ' ', '#', '#', '#', '#'},
+            {'#', '#', ' ', '#', '#', '#', '#'},
+            {'A', ' ', ' ', '#', '#', '#', '#'}
+    };
+
+    char[][] maze2 = {
+            {' ', '#', ' ', ' ', ' ', ' ', 'B'},
+            {' ', '#', ' ', '#', '#', '#', '#'},
+            {' ', '#', ' ', '#', '#', ' ', '#'},
+            {' ', ' ', ' ', '#', '#', ' ', '#'},
+            {'#', ' ', '#', '#', '#', ' ', '#'},
+            {'#', ' ', ' ', ' ', ' ', ' ', '#'},
+            {'A', ' ', ' ', '#', '#', '#', '#'}
+    };
+    public MazeMeta getMaze(String mazeName) {
         MazeMeta mazeMeta = new MazeMeta();
-        char[][] maze1 = {
-                {'#', '#', ' ', ' ', ' ', ' ', 'B'},
-                {'#', '#', ' ', '#', '#', '#', '#'},
-                {'#', '#', ' ', '#', '#', '#', '#'},
-                {'#', '#', ' ', '#', '#', '#', '#'},
-                {'#', '#', ' ', '#', '#', '#', '#'},
-                {'#', '#', ' ', '#', '#', '#', '#'},
-                {'A', ' ', ' ', '#', '#', '#', '#'}
-        };
-        int rows = maze1.length;
-        int cols = maze1[0].length;
+        char [][] selectedMaze = getSelectedMaze(mazeName);
+        int rows = selectedMaze.length;
+        int cols = selectedMaze[0].length;
         Node[][] maze = new Node[rows][cols];
 
         for (int i = 0; i< rows; i++) {
@@ -24,7 +35,7 @@ public class MazeReader {
                 State state = new State();
                 state.setRow(i);
                 state.setCol(j);
-                CellType cellType = getCellType(maze1[i][j]);
+                CellType cellType = getCellType(selectedMaze[i][j]);
                 if (cellType.equals(CellType.START)) {
                     mazeMeta.setInitialNode(node);
                 } else if (cellType.equals(CellType.DESTINATION)) {
@@ -38,9 +49,9 @@ public class MazeReader {
                     int testColIndex = node.getState().getCol() + action.getCol();
 
                     if ((testRowIndex >= 0 && testRowIndex < maze.length)
-                        && (testColIndex>=0 && testColIndex < maze[testRowIndex].length)) {
-                        if ((maze1[testRowIndex][testColIndex] == CellType.PATH.getRepresentation())
-                        ||((maze1[testRowIndex][testColIndex] == CellType.DESTINATION.getRepresentation()))){
+                            && (testColIndex>=0 && testColIndex < maze[testRowIndex].length)) {
+                        if ((selectedMaze[testRowIndex][testColIndex] == CellType.PATH.getRepresentation())
+                                ||((selectedMaze[testRowIndex][testColIndex] == CellType.DESTINATION.getRepresentation()))){
                             node.getActions().add(action);
                         }
 
@@ -51,6 +62,14 @@ public class MazeReader {
         }
         mazeMeta.setMaze(maze);
         return mazeMeta;
+    }
+
+    private char[][] getSelectedMaze(String mazeName) {
+        switch (mazeName) {
+            case "maze1": return maze1;
+            case "maze2" : return maze2;
+            default: return maze1;
+        }
     }
 
     private CellType getCellType(char representation) {

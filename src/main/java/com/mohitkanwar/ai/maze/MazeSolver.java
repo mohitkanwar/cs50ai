@@ -3,10 +3,7 @@ package com.mohitkanwar.ai.maze;
 import com.mohitkanwar.ai.maze.frontiers.Frontier;
 import com.mohitkanwar.ai.maze.frontiers.QueueFrontier;
 import com.mohitkanwar.ai.maze.mazereader.MazeReader;
-import com.mohitkanwar.ai.maze.models.Action;
-import com.mohitkanwar.ai.maze.models.CellType;
-import com.mohitkanwar.ai.maze.models.MazeMeta;
-import com.mohitkanwar.ai.maze.models.Node;
+import com.mohitkanwar.ai.maze.models.*;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -16,14 +13,12 @@ public class MazeSolver {
     private Frontier frontier;
     boolean[][] visited;
 
-    MazeMeta mazeMeta;
 
-    MazeReader mazeReader = new MazeReader();
-    public List<Node> solve (){
-        this.mazeMeta = mazeReader.getMaze1();
+    public Solution solve (MazeMeta mazeMeta){
+
         this.visited = new boolean[mazeMeta.getMaze().length][mazeMeta.getMaze()[0].length];
         this.frontier = new QueueFrontier();
-        this.frontier.add(this.mazeMeta.getInitialNode());
+        this.frontier.add(mazeMeta.getInitialNode());
 
         while (!this.frontier.isEmpty()) {
             Node currentNode = this.frontier.remove();
@@ -35,7 +30,10 @@ public class MazeSolver {
                     path.add(0, node);
                     node = node.getParent();
                 }
-                return path;
+                Solution solution = new Solution();
+                solution.setSelectedPath(path);
+                solution.setVisited(visited);
+                return solution;
             }
 
 
@@ -56,6 +54,9 @@ public class MazeSolver {
                     }
                 }
         }
-        return Collections.emptyList();
+        Solution solution = new Solution();
+        solution.setSelectedPath(Collections.emptyList());
+        solution.setVisited(visited);
+        return solution;
     }
 }
