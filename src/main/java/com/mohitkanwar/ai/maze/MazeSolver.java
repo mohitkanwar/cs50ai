@@ -10,18 +10,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MazeSolver {
-    private Frontier frontier;
+
     boolean[][] visited;
 
 
-    public Solution solve (MazeMeta mazeMeta){
+    public Solution solve (MazeMeta mazeMeta, Frontier frontier){
 
         this.visited = new boolean[mazeMeta.getMaze().length][mazeMeta.getMaze()[0].length];
-        this.frontier = new QueueFrontier();
-        this.frontier.add(mazeMeta.getInitialNode());
 
-        while (!this.frontier.isEmpty()) {
-            Node currentNode = this.frontier.remove();
+        frontier.add(mazeMeta.getInitialNode());
+
+        while (!frontier.isEmpty()) {
+            Node currentNode = frontier.remove();
             this.visited[currentNode.getState().getRow()][currentNode.getState().getCol()] = true;
             if (currentNode.getState().getCellType().equals(CellType.DESTINATION)){
                 List<Node> path = new LinkedList<>();

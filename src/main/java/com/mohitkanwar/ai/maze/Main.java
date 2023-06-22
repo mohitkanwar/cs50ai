@@ -1,5 +1,8 @@
 package com.mohitkanwar.ai.maze;
 
+import com.mohitkanwar.ai.maze.frontiers.Frontier;
+import com.mohitkanwar.ai.maze.frontiers.QueueFrontier;
+import com.mohitkanwar.ai.maze.frontiers.StateFrontier;
 import com.mohitkanwar.ai.maze.mazeprinter.ImagePrinter;
 import com.mohitkanwar.ai.maze.mazereader.MazeReader;
 import com.mohitkanwar.ai.maze.models.MazeMeta;
@@ -16,7 +19,9 @@ public class Main {
         MazeSolver mazeSolver = new MazeSolver();
         MazeReader mazeReader = new MazeReader();
         MazeMeta mazeMeta = mazeReader.getMaze("maze2");
-        Solution solution = mazeSolver.solve(mazeMeta);
+//       Frontier frontier = new StateFrontier();
+       Frontier frontier = new QueueFrontier();
+        Solution solution = mazeSolver.solve(mazeMeta, frontier);
         if (solution.getSelectedPath().isEmpty()) {
             System.out.println("No solution found");
         } else {
