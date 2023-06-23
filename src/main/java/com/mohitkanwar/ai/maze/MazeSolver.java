@@ -48,6 +48,7 @@ public class MazeSolver {
                         if (neighbor.getState().getCellType().equals(CellType.PATH)
                         ||neighbor.getState().getCellType().equals(CellType.DESTINATION)) {
                             neighbor.setParent(currentNode);
+                            neighbor.setCost(currentNode.getCost() + 1);
                             frontier.add(neighbor);
                         }
 

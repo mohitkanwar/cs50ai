@@ -2,6 +2,7 @@ package com.mohitkanwar.ai.maze;
 
 import com.mohitkanwar.ai.maze.frontiers.Frontier;
 import com.mohitkanwar.ai.maze.frontiers.InformedSearchFrontier;
+import com.mohitkanwar.ai.maze.frontiers.comparators.AStarNodeComparator;
 import com.mohitkanwar.ai.maze.frontiers.comparators.GreedyBestFirstNodeComparator;
 import com.mohitkanwar.ai.maze.mazeprinter.ImagePrinter;
 import com.mohitkanwar.ai.maze.mazereader.MazeReader;
@@ -21,7 +22,8 @@ public class Main {
 //       Frontier frontier = new StateFrontier();
 //       Frontier frontier = new WidthFirstSearchFrontier();
         Comparator<Node> greedyBestFirstSearch = new GreedyBestFirstNodeComparator(mazeMeta.getDestinationNode());
-       Frontier frontier = new InformedSearchFrontier(mazeMeta.getDestinationNode(), greedyBestFirstSearch);
+        Comparator<Node> aStarNodeComparator = new AStarNodeComparator(mazeMeta.getDestinationNode());
+       Frontier frontier = new InformedSearchFrontier(mazeMeta.getDestinationNode(), aStarNodeComparator);
         Solution solution = mazeSolver.solve(mazeMeta, frontier);
         if (solution.getSelectedPath().isEmpty()) {
             System.out.println("No solution found");
