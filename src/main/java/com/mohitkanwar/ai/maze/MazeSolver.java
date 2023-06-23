@@ -1,8 +1,6 @@
 package com.mohitkanwar.ai.maze;
 
 import com.mohitkanwar.ai.maze.frontiers.Frontier;
-import com.mohitkanwar.ai.maze.frontiers.QueueFrontier;
-import com.mohitkanwar.ai.maze.mazereader.MazeReader;
 import com.mohitkanwar.ai.maze.models.*;
 
 import java.util.Collections;
@@ -21,6 +19,8 @@ public class MazeSolver {
         frontier.add(mazeMeta.getInitialNode());
 
         while (!frontier.isEmpty()) {
+
+            frontier.print();
             Node currentNode = frontier.remove();
             this.visited[currentNode.getState().getRow()][currentNode.getState().getCol()] = true;
             if (currentNode.getState().getCellType().equals(CellType.DESTINATION)){

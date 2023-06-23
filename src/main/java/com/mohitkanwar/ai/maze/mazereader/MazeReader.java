@@ -14,14 +14,15 @@ public class MazeReader {
     };
 
     char[][] maze2 = {
-            {' ', '#', ' ', ' ', ' ', ' ', 'B'},
-            {' ', '#', ' ', '#', '#', '#', '#'},
-            {' ', '#', ' ', '#', '#', ' ', '#'},
-            {' ', ' ', ' ', '#', '#', ' ', '#'},
-            {'#', ' ', '#', '#', '#', ' ', '#'},
-            {'#', ' ', ' ', ' ', ' ', ' ', '#'},
-            {'#', '#', ' ', '#', '#', '#', '#'},
-            {'A', ' ', ' ', '#', '#', '#', '#'}
+            {' ', '#', ' ', ' ', ' ', ' ', 'B'},//0
+            {' ', '#', ' ', '#', '#', '#', '#'},//1
+            {' ', '#', ' ', '#', '#', ' ', '#'},//2
+            {' ', ' ', ' ', '#', '#', ' ', '#'},//3
+            {'#', ' ', '#', '#', '#', ' ', '#'},//4
+            {'#', ' ', ' ', ' ', ' ', ' ', '#'},//5
+            {'#', '#', ' ', '#', '#', '#', '#'},//6
+            {'A', ' ', ' ', '#', '#', '#', '#'} //7
+            //0,  1   , 2 ,  3,  4  ,  5,   6
     };
     public MazeMeta getMaze(String mazeName) {
         MazeMeta mazeMeta = new MazeMeta();
@@ -44,20 +45,22 @@ public class MazeReader {
                 }
                 state.setCellType(cellType);
                 node.setState(state);
+                if( !node.getState().getCellType().equals(CellType.WALL)){
+                    for(Action action: Action.values()) {
+                        int testRowIndex = node.getState().getRow() + action.getRow();
+                        int testColIndex = node.getState().getCol() + action.getCol();
 
-                for(Action action: Action.values()) {
-                    int testRowIndex = node.getState().getRow() + action.getRow();
-                    int testColIndex = node.getState().getCol() + action.getCol();
+                        if ((testRowIndex >= 0 && testRowIndex < maze.length)
+                                && (testColIndex>=0 && testColIndex < maze[testRowIndex].length)) {
+                            if ((selectedMaze[testRowIndex][testColIndex] == CellType.PATH.getRepresentation())
+                                    ||((selectedMaze[testRowIndex][testColIndex] == CellType.DESTINATION.getRepresentation()))){
+                                node.getActions().add(action);
+                            }
 
-                    if ((testRowIndex >= 0 && testRowIndex < maze.length)
-                            && (testColIndex>=0 && testColIndex < maze[testRowIndex].length)) {
-                        if ((selectedMaze[testRowIndex][testColIndex] == CellType.PATH.getRepresentation())
-                                ||((selectedMaze[testRowIndex][testColIndex] == CellType.DESTINATION.getRepresentation()))){
-                            node.getActions().add(action);
                         }
-
                     }
                 }
+
                 maze[i][j] =   node;
             }
         }

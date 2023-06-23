@@ -6,7 +6,8 @@ import com.mohitkanwar.ai.maze.models.State;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class QueueFrontier implements Frontier{
+public class WidthFirstSearchFrontier implements Frontier{
+    // First in first out
     Queue<Node> frontier = new LinkedList<>();
 
     @Override
@@ -18,12 +19,21 @@ public class QueueFrontier implements Frontier{
         return frontier.remove();
     }
     @Override
-    public boolean contains(State state) {
+    public boolean contains(Node node) {
         // check if frontier contains a node which has same state as mentioned
-        return false;
+        return frontier.contains(node);
     }
     @Override
     public boolean isEmpty() {
         return frontier.isEmpty();
+    }
+
+    @Override
+    public void print() {
+        System.out.println("===============");
+        frontier.forEach(node -> {
+            System.out.println("(" + node.getState().getRow() + ", " + node.getState().getCol() + ")");
+        });
+        System.out.println("===============");
     }
 }

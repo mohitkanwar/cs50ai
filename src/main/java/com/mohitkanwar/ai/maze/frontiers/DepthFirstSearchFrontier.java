@@ -5,7 +5,8 @@ import com.mohitkanwar.ai.maze.models.State;
 
 import java.util.Stack;
 
-public class StateFrontier implements Frontier{
+public class DepthFirstSearchFrontier implements Frontier{
+    // Last in first out
     Stack<Node> frontier = new Stack<>();
 
     public void add  (Node node){
@@ -15,12 +16,21 @@ public class StateFrontier implements Frontier{
     public Node remove () {
         return frontier.pop();
     }
-    public boolean contains (State state) {
+    public boolean contains (Node node) {
         // check if frontier contains a node which has same state as mentioned
-        return false;
+        return frontier.contains(node);
     }
 
     public boolean isEmpty() {
         return frontier.isEmpty();
+    }
+
+    @Override
+    public void print() {
+        System.out.println("===============");
+        frontier.forEach(node -> {
+            System.out.println("(" + node.getState().getRow() + ", " + node.getState().getCol() + ")");
+        });
+        System.out.println("===============");
     }
 }

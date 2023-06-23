@@ -8,7 +8,9 @@ public interface Frontier {
 
     Node remove();
 
-    boolean contains (State state);
+    boolean contains (Node node);
 
     boolean isEmpty();
+
+    void print();
 }
