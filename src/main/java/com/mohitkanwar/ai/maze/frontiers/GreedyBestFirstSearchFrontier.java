@@ -18,7 +18,10 @@ public class GreedyBestFirstSearchFrontier implements Frontier{
     }
 
     public void add  (Node node){
-        frontier.add(node);
+        boolean added = frontier.add(node);
+        if (!added) {
+            System.out.println("was trying to add node" + node.getState() + "but failed to add the same.");
+        }
     }
 
     public Node remove () {

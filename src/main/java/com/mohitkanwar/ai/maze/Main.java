@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         MazeSolver mazeSolver = new MazeSolver();
         MazeReader mazeReader = new MazeReader();
-        MazeMeta mazeMeta = mazeReader.getMaze("maze2");
+        MazeMeta mazeMeta = mazeReader.getMaze("maze3");
 //       Frontier frontier = new StateFrontier();
 //       Frontier frontier = new WidthFirstSearchFrontier();
        Frontier frontier = new GreedyBestFirstSearchFrontier(mazeMeta.getDestinationNode());
