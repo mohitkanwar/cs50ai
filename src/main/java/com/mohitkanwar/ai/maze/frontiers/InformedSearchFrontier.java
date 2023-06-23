@@ -2,19 +2,18 @@ package com.mohitkanwar.ai.maze.frontiers;
 
 import com.mohitkanwar.ai.maze.frontiers.comparators.GreedyBestFirstNodeComparator;
 import com.mohitkanwar.ai.maze.models.Node;
-import com.mohitkanwar.ai.maze.models.State;
 
 import java.util.*;
 
-public class GreedyBestFirstSearchFrontier implements Frontier{
+public class InformedSearchFrontier implements Frontier{
 
     // Last in first out
     private final SortedSet<Node> frontier;
     private final Node goal;
 
-    public GreedyBestFirstSearchFrontier(Node goal) {
+    public InformedSearchFrontier(Node goal, Comparator<Node> comparator) {
         this.goal = goal;
-        this.frontier = new TreeSet<>(new GreedyBestFirstNodeComparator(goal));
+        this.frontier = new TreeSet<>(comparator);
     }
 
     public void add  (Node node){

@@ -14,6 +14,8 @@ public class Node {
    @ToString.Exclude
    private Node parent;
 
+   private int cost;
+
    private final List<Action> actions = new ArrayList<>();
 
 

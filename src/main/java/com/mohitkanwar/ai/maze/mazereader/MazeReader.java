@@ -36,6 +36,18 @@ public class MazeReader {
             {'A', ' ', ' ', ' ', '#', '#', ' ',' ', ' ', ' ', ' ', ' ', ' ', ' '} //7
             //0,  1   , 2 ,  3,  4  ,  5,   6,  7,   8 ,  9  , 10,  11,  12,  13
     };
+
+    char[][] maze4 = {
+            {' ', '#', ' ', ' ', ' ', ' ', ' ',' ', ' ', ' ', ' ', ' ', ' ', 'B'},//0
+            {' ', '#', ' ', '#', '#', '#', '#','#', '#', '#', '#', '#', '#', ' '},//1
+            {'#', '#', ' ', '#', '#', ' ', ' ',' ', ' ', ' ', ' ', '#', '#', ' '},//2
+            {' ', ' ', ' ', '#', '#', ' ', '#','#', '#', '#', ' ', '#', '#', ' '},//3
+            {' ', '#', '#', '#', '#', ' ', '#','#', '#', '#', ' ', '#', '#', ' '},//4
+            {' ', ' ', ' ', ' ', ' ', ' ', '#',' ', ' ', ' ', ' ', ' ', '#', ' '},//5
+            {'#', '#', '#', ' ', '#', '#', '#',' ', '#', '#', '#', '#', '#', ' '},//6
+            {'A', ' ', ' ', ' ', '#', '#', '#',' ', ' ', ' ', ' ', ' ', ' ', ' '} //7
+            //0,  1   , 2 ,  3,  4  ,  5,   6,  7,   8 ,  9  , 10,  11,  12,  13
+    };
     public MazeMeta getMaze(String mazeName) {
         MazeMeta mazeMeta = new MazeMeta();
         char [][] selectedMaze = getSelectedMaze(mazeName);
@@ -51,6 +63,7 @@ public class MazeReader {
                 state.setCol(j);
                 CellType cellType = getCellType(selectedMaze[i][j]);
                 if (cellType.equals(CellType.START)) {
+                    node.setCost(0);
                     mazeMeta.setInitialNode(node);
                 } else if (cellType.equals(CellType.DESTINATION)) {
                     mazeMeta.setDestinationNode(node);
@@ -85,6 +98,7 @@ public class MazeReader {
             case "maze1": return maze1;
             case "maze2" : return maze2;
             case "maze3" : return maze3;
+            case "maze4" : return maze4;
             default: return maze1;
         }
     }
